@@ -244,13 +244,15 @@ class SiPixelDigitizerAlgorithm  {
      float thePixelChipEfficiency[20]; // ROC efficiency
      std::vector<double> theLadderEfficiency_BPix[20]; // Ladder efficiency
      std::vector<double> theModuleEfficiency_BPix[20]; // Module efficiency
-     std::vector<double> thePUEfficiency_BPix[20]; // Instlumi dependent efficiency
+     std::vector<double> thePUEfficiency[20]; // Instlumi dependent efficiency
+     float theInnerEfficiency_FPix[20]; // Fpix inner module efficiency
+     float theOuterEfficiency_FPix[20]; // Fpix outer module efficiency
      unsigned int FPixIndex;         // The Efficiency index for FPix Disks
    };
 
  private:
    // Needed by dynamic inefficiency 
-   // 0-3 BPix, 4-5 FPix
+   // 0-3 BPix, 4-5 FPix (inner, outer)
    double _pu_scale[20];
 
     // Internal typedefs
@@ -291,6 +293,8 @@ class SiPixelDigitizerAlgorithm  {
     //-- Allow for upgrades
     const int NumberOfBarrelLayers;     // Default = 3
     const int NumberOfEndcapDisks;      // Default = 2
+   
+    const float theInstLumiScaleFactor;
 
     //-- make_digis 
     const float theElectronPerADC;     // Gain, number of electrons per adc count.

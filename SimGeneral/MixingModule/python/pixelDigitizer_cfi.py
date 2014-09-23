@@ -55,21 +55,29 @@ pixelDigitizer = cms.PSet(
     killModules = cms.bool(True),
     NumPixelBarrel = cms.int32(3),
     NumPixelEndcap = cms.int32(2),
+    #theInstLumiScaleFactor = cms.double(261.9), # 1.18 (13TeV/8TeV) * 221.95
+    theInstLumiScaleFactor = cms.double(221.95),
     thePixelColEfficiency_BPix1 = cms.double(1.0), 	# Only used when AddPixelInefficiency = true
     thePixelColEfficiency_BPix2 = cms.double(1.0),
     thePixelColEfficiency_BPix3 = cms.double(1.0),
-    thePixelColEfficiency_FPix1 = cms.double(0.999),
-    thePixelColEfficiency_FPix2 = cms.double(0.999),
+    #thePixelColEfficiency_FPix1 = cms.double(0.999),
+    #thePixelColEfficiency_FPix2 = cms.double(0.999),
+    thePixelColEfficiency_FPix1 = cms.double(1.0),
+    thePixelColEfficiency_FPix2 = cms.double(1.0),
     thePixelEfficiency_BPix1 = cms.double(1.0), 	# Only used when AddPixelInefficiency = true
     thePixelEfficiency_BPix2 = cms.double(1.0),
     thePixelEfficiency_BPix3 = cms.double(1.0),
-    thePixelEfficiency_FPix1 = cms.double(0.999),
-    thePixelEfficiency_FPix2 = cms.double(0.999),
+    #thePixelEfficiency_FPix1 = cms.double(0.999),
+    #thePixelEfficiency_FPix2 = cms.double(0.999),
+    thePixelEfficiency_FPix1 = cms.double(1.0),
+    thePixelEfficiency_FPix2 = cms.double(1.0),
     thePixelChipEfficiency_BPix1 = cms.double(1.0), 	# Only used when AddPixelInefficiency = true
     thePixelChipEfficiency_BPix2 = cms.double(1.0),
     thePixelChipEfficiency_BPix3 = cms.double(1.0),
-    thePixelChipEfficiency_FPix1 = cms.double(0.999),
-    thePixelChipEfficiency_FPix2 = cms.double(0.999),
+    #thePixelChipEfficiency_FPix1 = cms.double(0.999),
+    #thePixelChipEfficiency_FPix2 = cms.double(0.999),
+    thePixelChipEfficiency_FPix1 = cms.double(1.0),
+    thePixelChipEfficiency_FPix2 = cms.double(1.0),
     theLadderEfficiency_BPix1 = cms.vdouble(
         0.978351,
         0.971877,
@@ -201,6 +209,20 @@ pixelDigitizer = cms.PSet(
         -1.85915e-10
         ),
     thePUEfficiency_BPix3 = cms.vdouble(
+        1.0032,
+        -1.96206e-08,
+        -1.99009e-10
+        ),
+    theInnerEfficiency_FPix1 = cms.double(0.981999),
+    theInnerEfficiency_FPix2 = cms.double(0.981999),
+    theOuterEfficiency_FPix1 = cms.double(0.997143),
+    theOuterEfficiency_FPix2 = cms.double(0.997143),
+    thePUEfficiency_FPix_Inner = cms.vdouble(
+        1.00648,
+        -1.28515e-06,
+        -1.85915e-10
+        ),
+    thePUEfficiency_FPix_Outer = cms.vdouble(
         1.0032,
         -1.96206e-08,
         -1.99009e-10
