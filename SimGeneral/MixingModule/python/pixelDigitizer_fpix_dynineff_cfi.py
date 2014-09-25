@@ -59,18 +59,18 @@ pixelDigitizer = cms.PSet(
     thePixelColEfficiency_BPix1 = cms.double(1.0), 	# Only used when AddPixelInefficiency = true
     thePixelColEfficiency_BPix2 = cms.double(1.0),
     thePixelColEfficiency_BPix3 = cms.double(1.0),
-    thePixelColEfficiency_FPix1 = cms.double(0.999),
-    thePixelColEfficiency_FPix2 = cms.double(0.999),
+    thePixelColEfficiency_FPix1 = cms.double(1.0),
+    thePixelColEfficiency_FPix2 = cms.double(1.0),
     thePixelEfficiency_BPix1 = cms.double(1.0), 	# Only used when AddPixelInefficiency = true
     thePixelEfficiency_BPix2 = cms.double(1.0),
     thePixelEfficiency_BPix3 = cms.double(1.0),
-    thePixelEfficiency_FPix1 = cms.double(0.999),
-    thePixelEfficiency_FPix2 = cms.double(0.999),
+    thePixelEfficiency_FPix1 = cms.double(1.0),
+    thePixelEfficiency_FPix2 = cms.double(1.0),
     thePixelChipEfficiency_BPix1 = cms.double(1.0), 	# Only used when AddPixelInefficiency = true
     thePixelChipEfficiency_BPix2 = cms.double(1.0),
     thePixelChipEfficiency_BPix3 = cms.double(1.0),
-    thePixelChipEfficiency_FPix1 = cms.double(0.999),
-    thePixelChipEfficiency_FPix2 = cms.double(0.999),
+    thePixelChipEfficiency_FPix1 = cms.double(1.0),
+    thePixelChipEfficiency_FPix2 = cms.double(1.0),
     theLadderEfficiency_BPix1 = cms.vdouble(
         0.978351,
         0.971877,
@@ -177,19 +177,19 @@ pixelDigitizer = cms.PSet(
         1.00361,
         0.999371,
         0.961242,
-        0.952364
+        0.953582
         ),
     theModuleEfficiency_BPix2 = cms.vdouble(
         1.00069,
         0.999792,
         0.99562,
-        0.955627
+        1.00341
         ),
     theModuleEfficiency_BPix3 = cms.vdouble(
         1.00006,
         0.999744,
         0.998147,
-        1.00314
+        1.00039
         ),
     thePUEfficiency_BPix1 = cms.vdouble(
         1.0181,
@@ -206,15 +206,19 @@ pixelDigitizer = cms.PSet(
         -1.96206e-08,
         -1.99009e-10
         ),
-    theInnerEfficiency_FPix1 = cms.double(1.0),
-    theInnerEfficiency_FPix2 = cms.double(1.0),
-    theOuterEfficiency_FPix1 = cms.double(1.0),
-    theOuterEfficiency_FPix2 = cms.double(1.0),
+    theInnerEfficiency_FPix1 = cms.double(0.994015),
+    theInnerEfficiency_FPix2 = cms.double(0.994015),
+    theOuterEfficiency_FPix1 = cms.double(0.996454),
+    theOuterEfficiency_FPix2 = cms.double(0.996454),
     thePUEfficiency_FPix_Inner = cms.vdouble(
-        1
+        1.00648,
+        -1.28515e-06,
+        -1.85915e-10
         ),
     thePUEfficiency_FPix_Outer = cms.vdouble(
-        1
+        1.0032,
+        -1.96206e-08,
+        -1.99009e-10
         ),
 DeadModules = cms.VPSet(
  cms.PSet(Dead_detID = cms.int32(302055940), Module = cms.string("tbmB"))
