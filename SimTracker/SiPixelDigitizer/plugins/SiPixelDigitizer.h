@@ -61,10 +61,11 @@ namespace cms {
 
     virtual void StorePileupInformation( std::vector<int> &numInteractionList,
 				 std::vector<int> &bunchCrossingList,
-				 std::vector<float> &TrueInteractionList){
+				 std::vector<float> &TrueInteractionList,
+         int &bunchSpace_){
       PileupInfo_ = new PileupMixingContent(numInteractionList, bunchCrossingList, TrueInteractionList);
+      int bunchSpace = bunchSpace_;
     }
-
     virtual PileupMixingContent* getEventPileupInfo() { return PileupInfo_; }
 
   private:

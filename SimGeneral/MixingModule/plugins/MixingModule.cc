@@ -438,7 +438,8 @@ namespace edm {
     for(Accumulators::const_iterator accItr = digiAccumulators_.begin(), accEnd = digiAccumulators_.end(); accItr != accEnd; ++accItr) {
       (*accItr)->StorePileupInformation( bunchCrossingList,
 					 numInteractionList,
-					 TrueInteractionList);
+					 TrueInteractionList,
+           bunchSpace_);
     }
 
 

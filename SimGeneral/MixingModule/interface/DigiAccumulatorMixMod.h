@@ -79,7 +79,8 @@ class DigiAccumulatorMixMod {
 
     virtual void StorePileupInformation( std::vector<int> &numInteractionList,
 				 std::vector<int> &bunchCrossingList,
-				 std::vector<float> &TrueInteractionList){ }
+				 std::vector<float> &TrueInteractionList,
+         int &bunchSpace_){ }
 
     virtual PileupMixingContent* getEventPileupInfo() { 
       std::cout << " You must override the virtual functions in DigiAccumulatorMixMod in\n" << "order to access PileupInformation.  Returning empty object." << std::endl;
