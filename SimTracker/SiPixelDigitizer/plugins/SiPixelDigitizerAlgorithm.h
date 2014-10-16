@@ -65,7 +65,7 @@ class SiPixelDigitizerAlgorithm  {
                 std::vector<PixelDigiSimLink>& simlinks,
 		const TrackerTopology *tTopo,
                 CLHEP::HepRandomEngine*);
-  void calculateInstlumiFactor(PileupMixingContent* puInfo, int BunchSpace);
+  void calculateInstlumiFactor(PileupMixingContent* puInfo, int bunchSpace);
 
  private:
   
