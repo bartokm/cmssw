@@ -61,8 +61,10 @@ namespace cms {
 
     virtual void StorePileupInformation( std::vector<int> &numInteractionList,
 				 std::vector<int> &bunchCrossingList,
-				 std::vector<float> &TrueInteractionList){
+				 std::vector<float> &TrueInteractionList,
+         int bunchSpace){
       PileupInfo_ = new PileupMixingContent(numInteractionList, bunchCrossingList, TrueInteractionList);
+      bunchSpace_ = bunchSpace;
     }
 
     virtual PileupMixingContent* getEventPileupInfo() { return PileupInfo_; }
@@ -97,6 +99,7 @@ namespace cms {
     std::vector<CLHEP::HepRandomEngine*> randomEngines_;
 
     PileupMixingContent* PileupInfo_;
+    int bunchSpace_;
     
     const bool pilotBlades; // Default = false
     const int NumberOfEndcapDisks; // Default = 2
