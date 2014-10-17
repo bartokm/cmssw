@@ -563,7 +563,7 @@ void SiPixelDigitizerAlgorithm::calculateInstlumiFactor(PileupMixingContent* puI
     
     if (pu0!=bunchCrossing.end()) {        
       for (size_t i=0; i<3; i++) {
-	double instlumi = TrueInteractionList.at(p)*theInstLumiScaleFactor*(50/bunchSpace);
+	double instlumi = TrueInteractionList.at(p)*theInstLumiScaleFactor*(bunchSpace==25 ? 1.82 :1);
 	double instlumi_pow=1.;
 	_pu_scale[i] = 0;
 	for  (size_t j=0; j<pixelEfficiencies_.thePUEfficiency_BPix[i].size(); j++){
