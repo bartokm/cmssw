@@ -149,6 +149,7 @@ SiPixelDigitizerAlgorithm::SiPixelDigitizerAlgorithm(const edm::ParameterSet& co
   NumberOfEndcapDisks(conf.exists("NumPixelEndcap")?conf.getParameter<int>("NumPixelEndcap"):2),
 
   theInstLumiScaleFactor(conf.getParameter<double>("theInstLumiScaleFactor")), //For dynamic inefficiency PU scaling
+  bunchScale(conf.getParameter<double>("bunchScale")), //For dynamic inefficiency bunchspace scaling
 
   // ADC calibration 1adc count(135e.
   // Corresponds to 2adc/kev, 270[e/kev]/135[e/adc](2[adc/kev]
@@ -565,6 +566,8 @@ void SiPixelDigitizerAlgorithm::calculateInstlumiFactor(PileupMixingContent* puI
     std::vector<int>::const_iterator pu;
     std::vector<int>::const_iterator pu0 = bunchCrossing.end();
 
+    if (bunchSpace==50) bunchScale=1.0;
+
     for (pu=bunchCrossing.begin(); pu!=bunchCrossing.end(); ++pu) {
       if (*pu==0) {
 	pu0 = pu;
@@ -575,7 +578,7 @@ void SiPixelDigitizerAlgorithm::calculateInstlumiFactor(PileupMixingContent* puI
     
     if (pu0!=bunchCrossing.end()) {        
       for (size_t i=0; i<5; i++) {
-	double instlumi = TrueInteractionList.at(p)*theInstLumiScaleFactor;
+	double instlumi = TrueInteractionList.at(p)*theInstLumiScaleFactor*bunchScale;
 	double instlumi_pow=1.;
 	_pu_scale[i] = 0;
 	for  (size_t j=0; j<pixelEfficiencies_.thePUEfficiency[i].size(); j++){
