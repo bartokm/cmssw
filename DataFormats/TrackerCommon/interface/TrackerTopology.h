@@ -466,7 +466,6 @@ class TrackerTopology {
   SiStripDetId::ModuleGeometry moduleGeometry(const DetId &id) const; 
 
 
-  // VV--
   void getBits(const DetId &detid, std::vector<std::pair<unsigned int, unsigned int> >& startbitsMasks) const {
     startbitsMasks.clear();
     if (detid.det()!=DetId::Tracker) return;
@@ -487,7 +486,6 @@ class TrackerTopology {
 
     return ;
   }
-  // --VV
 
 
  private:
