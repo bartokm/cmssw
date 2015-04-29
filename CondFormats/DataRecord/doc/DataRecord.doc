@@ -264,6 +264,7 @@
 - SiPixelCPEGenericErrorParmRcd
 - SiPixelCalibConfigurationRcd
 - SiPixelDisabledModulesRcd
+- SiPixelDynamicInefficiencyRcd
 - SiPixelFedCablingMapRcd
 - SiPixelGainCalibrationForHLTRcd
 - SiPixelGainCalibrationForHLTSimRcd
