@@ -104,13 +104,13 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
     if (det == "bpix") {
       DetId detID=tTopo->pxbDetId(layer,ladder,module);
       bitset<32> temp (detID.rawId());
-      std::cout<<"Geom BPix detID "<<temp<<std::endl;
+      //std::cout<<"Geom BPix detID "<<temp<<std::endl;
       DynamicInefficiency->putGeomFactor(detID.rawId(),factor);
     }
     else if (det == "fpix") {
       DetId detID=tTopo->pxfDetId(side, disk, blade, panel, module);
       bitset<32> temp (detID.rawId());
-      std::cout<<"Geom FPix detID "<<temp<<std::endl;
+      //std::cout<<"Geom FPix detID "<<temp<<std::endl;
       DynamicInefficiency->putGeomFactor(detID.rawId(),factor);
     }
     else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
@@ -129,13 +129,13 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
     if (det == "bpix") {
       DetId detID=tTopo->pxbDetId(layer,ladder,module);
       bitset<32> temp (detID.rawId());
-      std::cout<<"PU BPix detID "<<temp<<std::endl;
+      //std::cout<<"PU BPix detID "<<temp<<std::endl;
       DynamicInefficiency->putPUFactor(detID.rawId(),factor);
     }
 
   }
 //other efficiencies
-    std::cout<<"theInstLumiScaleFactor_ "<<theInstLumiScaleFactor_<<std::endl;
+    //std::cout<<"theInstLumiScaleFactor_ "<<theInstLumiScaleFactor_<<std::endl;
     DynamicInefficiency->puttheInstLumiScaleFactor(theInstLumiScaleFactor_);
     std::vector<std::vector<double> > v_PixelBPixEfficiency;
     std::vector<std::vector<double> > v_PixelFPixEfficiency;
