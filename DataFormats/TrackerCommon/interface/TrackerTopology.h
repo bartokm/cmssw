@@ -506,29 +506,6 @@ class TrackerTopology {
     return false;
   }
 
-//
-  void getBits(const DetId &detid, std::vector<std::pair<unsigned int, unsigned int> >& startbitsMasks) const {
-    startbitsMasks.clear();
-    if (detid.det()!=DetId::Tracker) return;
-
-    int subdetId=detid.subdetId();
-
-    if (subdetId==PixelSubdetector::PixelBarrel) {  
-      startbitsMasks.push_back(std::make_pair(pbVals_.layerStartBit_, pbVals_.layerMask_));
-      startbitsMasks.push_back(std::make_pair(pbVals_.ladderStartBit_, pbVals_.ladderMask_));
-      startbitsMasks.push_back(std::make_pair(pbVals_.moduleStartBit_, pbVals_.moduleMask_));
-    } else if (subdetId==PixelSubdetector::PixelEndcap) {
-      startbitsMasks.push_back(std::make_pair(pfVals_.sideStartBit_, pfVals_.sideMask_));
-      startbitsMasks.push_back(std::make_pair(pfVals_.diskStartBit_, pfVals_.diskMask_));
-      startbitsMasks.push_back(std::make_pair(pfVals_.bladeStartBit_, pfVals_.bladeMask_));
-      startbitsMasks.push_back(std::make_pair(pfVals_.panelStartBit_, pfVals_.panelMask_));
-      startbitsMasks.push_back(std::make_pair(pfVals_.moduleStartBit_, pfVals_.moduleMask_));
-    }
-
-    return ;
-  }
-//
-
  private:
 
   PixelBarrelValues pbVals_;
