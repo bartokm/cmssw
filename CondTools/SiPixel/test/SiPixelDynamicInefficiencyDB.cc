@@ -82,13 +82,13 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
   std::cout<<"haho "<<tempf<<std::endl;
 */
 
-  uint32_t layer, LAYER = numeric_limits<uint32_t>::max();
-  uint32_t ladder, LADDER = numeric_limits<uint32_t>::max();
-  uint32_t module, MODULE = numeric_limits<uint32_t>::max();
-  uint32_t side, SIDE = numeric_limits<uint32_t>::max();
-  uint32_t disk, DISK = numeric_limits<uint32_t>::max();
-  uint32_t blade, BLADE = numeric_limits<uint32_t>::max();
-  uint32_t panel, PANEL = numeric_limits<uint32_t>::max();
+  uint32_t layer, LAYER = 0;
+  uint32_t ladder, LADDER = 0;
+  uint32_t module, MODULE = 0;
+  uint32_t side, SIDE = 0;
+  uint32_t disk, DISK = 0;
+  uint32_t blade, BLADE = 0;
+  uint32_t panel, PANEL = 0;
 
   for(Parameters::iterator it = theGeomFactors_.begin(); it != theGeomFactors_.end(); ++it) {
     string det = it->getParameter<string>("det");
@@ -135,7 +135,6 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
 
   }
 //other efficiencies
-    //std::cout<<"theInstLumiScaleFactor_ "<<theInstLumiScaleFactor_<<std::endl;
     DynamicInefficiency->puttheInstLumiScaleFactor(theInstLumiScaleFactor_);
     std::vector<std::vector<double> > v_PixelBPixEfficiency;
     std::vector<std::vector<double> > v_PixelFPixEfficiency;
