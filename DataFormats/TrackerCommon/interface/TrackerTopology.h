@@ -465,7 +465,48 @@ class TrackerTopology {
 
   SiStripDetId::ModuleGeometry moduleGeometry(const DetId &id) const; 
 
+  bool isContained (const DetId &detid1, const DetId &detid2) const{
+    int subdetId1 = detid1.subdetId();
+    int subdetId2 = detid2.subdetId();
+    uint32_t detid1_field, detid2_field;
+    if (detid1.det() != DetId::Tracker || detid2.det() != DetId::Tracker) return false;
 
+    if (subdetId1 != subdetId2) return false;
+
+    if (subdetId1 == PixelSubdetector::PixelBarrel){
+      detid1_field = (detid1.rawId()>>pbVals_.layerStartBit_)&pbVals_.layerMask_;
+      detid2_field = (detid2.rawId()>>pbVals_.layerStartBit_)&pbVals_.layerMask_;
+      if (detid1_field != detid2_field && detid1_field != 0 && detid2_field != 0) return false;
+      detid1_field = (detid1.rawId()>>pbVals_.ladderStartBit_)&pbVals_.ladderMask_;
+      detid2_field = (detid2.rawId()>>pbVals_.ladderStartBit_)&pbVals_.ladderMask_;
+      if (detid1_field != detid2_field && detid1_field != 0 && detid2_field != 0) return false;
+      detid1_field = (detid1.rawId()>>pbVals_.moduleStartBit_)&pbVals_.moduleMask_;
+      detid2_field = (detid2.rawId()>>pbVals_.moduleStartBit_)&pbVals_.moduleMask_;
+      if (detid1_field != detid2_field && detid1_field != 0 && detid2_field != 0) return false;
+      return true;
+    }
+    else if (subdetId1 == PixelSubdetector::PixelEndcap){
+      detid1_field = (detid1.rawId()>>pfVals_.sideStartBit_)&pfVals_.sideMask_;
+      detid2_field = (detid2.rawId()>>pfVals_.sideStartBit_)&pfVals_.sideMask_;
+      if (detid1_field != detid2_field && detid1_field != 0 && detid2_field != 0) return false;
+      detid1_field = (detid1.rawId()>>pfVals_.diskStartBit_)&pfVals_.diskMask_;
+      detid2_field = (detid2.rawId()>>pfVals_.diskStartBit_)&pfVals_.diskMask_;
+      if (detid1_field != detid2_field && detid1_field != 0 && detid2_field != 0) return false;
+      detid1_field = (detid1.rawId()>>pfVals_.bladeStartBit_)&pfVals_.bladeMask_;
+      detid2_field = (detid2.rawId()>>pfVals_.bladeStartBit_)&pfVals_.bladeMask_;
+      if (detid1_field != detid2_field && detid1_field != 0 && detid2_field != 0) return false;
+      detid1_field = (detid1.rawId()>>pfVals_.panelStartBit_)&pfVals_.panelMask_;
+      detid2_field = (detid2.rawId()>>pfVals_.panelStartBit_)&pfVals_.panelMask_;
+      if (detid1_field != detid2_field && detid1_field != 0 && detid2_field != 0) return false;
+      detid1_field = (detid1.rawId()>>pfVals_.moduleStartBit_)&pfVals_.moduleMask_;
+      detid2_field = (detid2.rawId()>>pfVals_.moduleStartBit_)&pfVals_.moduleMask_;
+      if (detid1_field != detid2_field && detid1_field != 0 && detid2_field != 0) return false;
+      return true;
+    }
+    return false;
+  }
+
+//
   void getBits(const DetId &detid, std::vector<std::pair<unsigned int, unsigned int> >& startbitsMasks) const {
     startbitsMasks.clear();
     if (detid.det()!=DetId::Tracker) return;
@@ -486,7 +527,7 @@ class TrackerTopology {
 
     return ;
   }
-
+//
 
  private:
 
