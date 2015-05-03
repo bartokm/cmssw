@@ -37,9 +37,6 @@ SiPixelDynamicInefficiencyDB::SiPixelDynamicInefficiencyDB(edm::ParameterSet con
        theChipGeomFactors_ = conf_.getUntrackedParameter<Parameters>("theChipGeomFactors");
        theChipPUEfficiency_ = conf_.getUntrackedParameter<Parameters>("theChipPUEfficiency");
        theInstLumiScaleFactor_ = conf_.getUntrackedParameter<double>("theInstLumiScaleFactor");
-       //thePixelEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelEfficiency");
-       //thePixelColEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelColEfficiency");
-       //thePixelChipEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelChipEfficiency");
 }
 
   //BeginJob
@@ -226,51 +223,8 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
       //std::cout<<"PU BPix detID "<<temp<<std::endl;
       DynamicInefficiency->putChipPUFactor(detID.rawId(),factor);
     }
-
   }
-//other efficiencies
-    DynamicInefficiency->puttheInstLumiScaleFactor(theInstLumiScaleFactor_);
-    /*
-    std::vector<std::vector<double> > v_PixelBPixEfficiency;
-    std::vector<std::vector<double> > v_PixelFPixEfficiency;
-    for(Parameters::iterator it = thePixelEfficiency_.begin(); it != thePixelEfficiency_.end(); ++it) {
-      string det = it->getParameter<string>("det");
-      std::vector<double> factor = it->getParameter<std::vector<double> >("factor");
-      if (det == "bpix"){
-        v_PixelBPixEfficiency.push_back(factor);
-      }
-      else if (det == "fpix"){
-        v_PixelFPixEfficiency.push_back(factor);
-      }
-      else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
-    }
-    for(Parameters::iterator it = thePixelColEfficiency_.begin(); it != thePixelColEfficiency_.end(); ++it) {
-      string det = it->getParameter<string>("det");
-      std::vector<double> factor = it->getParameter<std::vector<double> >("factor");
-      if (det == "bpix"){
-        v_PixelBPixEfficiency.push_back(factor);
-      }
-      else if (det == "fpix"){
-        v_PixelFPixEfficiency.push_back(factor);
-      }
-      else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
-    }
-    for(Parameters::iterator it = thePixelChipEfficiency_.begin(); it != thePixelChipEfficiency_.end(); ++it) {
-      string det = it->getParameter<string>("det");
-      std::vector<double> factor = it->getParameter<std::vector<double> >("factor");
-      if (det == "bpix"){
-        v_PixelBPixEfficiency.push_back(factor);
-      }
-      else if (det == "fpix"){
-        v_PixelFPixEfficiency.push_back(factor);
-      }
-      else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
-    }
-    string bpix_fpix="bpix";
-    DynamicInefficiency->putPixelEfficiency(bpix_fpix,v_PixelBPixEfficiency);
-    bpix_fpix="fpix";
-    DynamicInefficiency->putPixelEfficiency(bpix_fpix,v_PixelFPixEfficiency);
-*/
+  DynamicInefficiency->puttheInstLumiScaleFactor(theInstLumiScaleFactor_);
 
 	edm::Service<cond::service::PoolDBOutputService> mydbservice;
 	if( mydbservice.isAvailable() ){

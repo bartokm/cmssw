@@ -53,9 +53,6 @@ class SiPixelDynamicInefficiencyDB : public edm::EDAnalyzer
   Parameters theChipGeomFactors_;
   Parameters theChipPUEfficiency_;
   double theInstLumiScaleFactor_;
-  //Parameters thePixelEfficiency_;
-  //Parameters thePixelColEfficiency_;
-  //Parameters thePixelChipEfficiency_;
 };
 
 

@@ -136,28 +136,6 @@ void SiPixelDynamicInefficiencyReader::analyze( const edm::Event& e, const edm::
   }
   double theInstLumiScaleFactor = SiPixelDynamicInefficiency_->gettheInstLumiScaleFactors();
   std::cout<<"theInstLumiScaleFactor "<<theInstLumiScaleFactor<<std::endl;
-  /*
-  std::string bpix_fpix="bpix";
-  std::string efficiencies[3];
-  efficiencies[0]+="pixel";
-  efficiencies[1]+="double column";
-  efficiencies[2]+="chip";
-  for (unsigned int i=0;i<SiPixelDynamicInefficiency_->getPixelEfficiencies(bpix_fpix).size();i++){
-    std::cout<<"PixelEfficiencies bpix "<<efficiencies[i]<<" ";
-    for (unsigned int j=0;j<SiPixelDynamicInefficiency_->getPixelEfficiencies(bpix_fpix).at(i).size();j++){
-      std::cout<<SiPixelDynamicInefficiency_->getPixelEfficiencies(bpix_fpix)[i][j]<<" ";
-    }
-    std::cout<<std::endl;
-  }
-  bpix_fpix="fpix";
-  for (unsigned int i=0;i<SiPixelDynamicInefficiency_->getPixelEfficiencies(bpix_fpix).size();i++){
-    std::cout<<"PixelEfficiencies fpix "<<efficiencies[i]<<" ";
-    for (unsigned int j=0;j<SiPixelDynamicInefficiency_->getPixelEfficiencies(bpix_fpix).at(i).size();j++){
-      std::cout<<SiPixelDynamicInefficiency_->getPixelEfficiencies(bpix_fpix)[i][j]<<" ";
-    }
-    std::cout<<std::endl;
-  }
-  */
 
   //Comparing DB factors to config factors
 

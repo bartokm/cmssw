@@ -77,11 +77,6 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
                      )
 )
 
-
-
-
-
-
 ###### DYNAMIC INEFFICIENCY OBJECT ######
 process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyDB",
     #in case of PSet

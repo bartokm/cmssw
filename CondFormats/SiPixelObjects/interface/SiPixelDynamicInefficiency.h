@@ -37,9 +37,6 @@ class SiPixelDynamicInefficiency {
   inline void puttheInstLumiScaleFactors(double& InstLumiScaleFactor){theInstLumiScaleFactor_=InstLumiScaleFactor;}
   inline const double gettheInstLumiScaleFactors() const {return theInstLumiScaleFactor_;}
 
-  //inline void putPixelEfficiencies(bool& bpix_fpix, std::vector<std::vector<double> >&);
-  //inline const std::vector<std::vector<double> > getPixelEfficiencies(std::string& det) const {if (det=="bpix") return pixelBPixEfficiency_;else if (det=="fpix") return pixelFPixEfficiency_; else {std::vector<std::vector<double> > empty; return empty;}}
-
   bool   putPixelGeomFactor (const uint32_t&, double&);
   double  getPixelGeomFactor (const uint32_t&) const;
 
@@ -72,8 +69,6 @@ class SiPixelDynamicInefficiency {
   std::map<unsigned int,double> m_ChipGeomFactors;
   std::map<unsigned int,std::vector<double> > m_ChipPUFactors;
   double theInstLumiScaleFactor_;
-  //std::vector<std::vector<double> > pixelBPixEfficiency_;
-  //std::vector<std::vector<double> > pixelFPixEfficiency_;
 
  COND_SERIALIZABLE;
 };
