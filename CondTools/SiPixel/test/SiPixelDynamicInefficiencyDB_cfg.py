@@ -85,7 +85,27 @@ process.PoolDBOutputService = cms.Service("PoolDBOutputService",
 ###### DYNAMIC INEFFICIENCY OBJECT ######
 process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyDB",
     #in case of PSet
-    theGeomFactors = cms.untracked.VPSet(
+    thePixelGeomFactors = cms.untracked.VPSet(
+      cms.PSet(
+        det = cms.string("bpix"),
+        factor = cms.double(1)
+        ),
+      cms.PSet(
+        det = cms.string("fpix"),
+        factor = cms.double(0.999)
+        ),
+      ),
+    thePixelPUEfficiency = cms.untracked.VPSet(
+      cms.PSet(
+        det = cms.string("bpix"),
+        factor = cms.vdouble(1),
+        ),
+      cms.PSet(
+        det = cms.string("fpix"),
+        factor = cms.vdouble(1),
+        ),
+      ),
+    theColGeomFactors = cms.untracked.VPSet(
       cms.PSet(
         det = cms.string("bpix"),
         layer = cms.uint32(1),
@@ -254,8 +274,12 @@ process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyD
         module = cms.uint32(8),
         factor = cms.double(0.953582)
         ),
+      cms.PSet(
+        det = cms.string("fpix"),
+        factor = cms.double(1)
+        ),
       ),
-    thePUEfficiency = cms.untracked.VPSet(
+    theColPUEfficiency = cms.untracked.VPSet(
       cms.PSet(
         det = cms.string("bpix"),
         layer = cms.uint32(1),
@@ -298,37 +322,27 @@ process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyD
           ),
         )
       ),
-    theInstLumiScaleFactor = cms.untracked.double(221.95),
-    thePixelEfficiency = cms.untracked.VPSet(
+    theChipGeomFactors = cms.untracked.VPSet(
       cms.PSet(
         det = cms.string("bpix"),
-        factor = cms.vdouble(1,1,1)
+        factor = cms.double(1)
         ),
       cms.PSet(
         det = cms.string("fpix"),
-        factor = cms.vdouble(0.999,0.999),
+        factor = cms.double(0.999)
         ),
       ),
-    thePixelColEfficiency = cms.untracked.VPSet(
+    theChipPUEfficiency = cms.untracked.VPSet(
       cms.PSet(
         det = cms.string("bpix"),
-        factor = cms.vdouble(1,1,1)
+        factor = cms.vdouble(1),
         ),
       cms.PSet(
         det = cms.string("fpix"),
-        factor = cms.vdouble(0.999,0.999),
+        factor = cms.vdouble(1),
         ),
       ),
-    thePixelChipEfficiency = cms.untracked.VPSet(
-      cms.PSet(
-        det = cms.string("bpix"),
-        factor = cms.vdouble(1,1,1)
-        ),
-      cms.PSet(
-        det = cms.string("fpix"),
-        factor = cms.vdouble(0.999,0.999),
-        ),
-      )
+    theInstLumiScaleFactor = cms.untracked.double(221.95)
     )
 
 

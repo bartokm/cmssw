@@ -30,12 +30,16 @@ SiPixelDynamicInefficiencyDB::SiPixelDynamicInefficiencyDB(edm::ParameterSet con
   conf_(conf){
 	recordName_ = conf_.getUntrackedParameter<std::string>("record","SiPixelDynamicInefficiencyRcd");
 
-       theGeomFactors_ = conf_.getUntrackedParameter<Parameters>("theGeomFactors");
-       thePUEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePUEfficiency");
+       thePixelGeomFactors_ = conf_.getUntrackedParameter<Parameters>("thePixelGeomFactors");
+       thePixelPUEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelPUEfficiency");
+       theColGeomFactors_ = conf_.getUntrackedParameter<Parameters>("theColGeomFactors");
+       theColPUEfficiency_ = conf_.getUntrackedParameter<Parameters>("theColPUEfficiency");
+       theChipGeomFactors_ = conf_.getUntrackedParameter<Parameters>("theChipGeomFactors");
+       theChipPUEfficiency_ = conf_.getUntrackedParameter<Parameters>("theChipPUEfficiency");
        theInstLumiScaleFactor_ = conf_.getUntrackedParameter<double>("theInstLumiScaleFactor");
-       thePixelEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelEfficiency");
-       thePixelColEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelColEfficiency");
-       thePixelChipEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelChipEfficiency");
+       //thePixelEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelEfficiency");
+       //thePixelColEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelColEfficiency");
+       //thePixelChipEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelChipEfficiency");
 }
 
   //BeginJob
@@ -90,7 +94,7 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
   uint32_t blade, BLADE = 0;
   uint32_t panel, PANEL = 0;
 
-  for(Parameters::iterator it = theGeomFactors_.begin(); it != theGeomFactors_.end(); ++it) {
+  for(Parameters::iterator it = thePixelGeomFactors_.begin(); it != thePixelGeomFactors_.end(); ++it) {
     string det = it->getParameter<string>("det");
     it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
     it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
@@ -105,18 +109,18 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
       DetId detID=tTopo->pxbDetId(layer,ladder,module);
       bitset<32> temp (detID.rawId());
       //std::cout<<"Geom BPix detID "<<temp<<std::endl;
-      DynamicInefficiency->putGeomFactor(detID.rawId(),factor);
+      DynamicInefficiency->putPixelGeomFactor(detID.rawId(),factor);
     }
     else if (det == "fpix") {
       DetId detID=tTopo->pxfDetId(side, disk, blade, panel, module);
       bitset<32> temp (detID.rawId());
       //std::cout<<"Geom FPix detID "<<temp<<std::endl;
-      DynamicInefficiency->putGeomFactor(detID.rawId(),factor);
+      DynamicInefficiency->putPixelGeomFactor(detID.rawId(),factor);
     }
     else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
   }
 
-  for(Parameters::iterator it = thePUEfficiency_.begin(); it != thePUEfficiency_.end(); ++it) {
+  for(Parameters::iterator it = thePixelPUEfficiency_.begin(); it != thePixelPUEfficiency_.end(); ++it) {
     string det = it->getParameter<string>("det");
     it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
     it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
@@ -130,12 +134,103 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
       DetId detID=tTopo->pxbDetId(layer,ladder,module);
       bitset<32> temp (detID.rawId());
       //std::cout<<"PU BPix detID "<<temp<<std::endl;
-      DynamicInefficiency->putPUFactor(detID.rawId(),factor);
+      DynamicInefficiency->putPixelPUFactor(detID.rawId(),factor);
+    }
+
+  }
+
+  for(Parameters::iterator it = theColGeomFactors_.begin(); it != theColGeomFactors_.end(); ++it) {
+    string det = it->getParameter<string>("det");
+    it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
+    it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
+    it->exists("module") ? module = it->getParameter<unsigned int>("module") : module = MODULE;
+    it->exists("side") ? side = it->getParameter<unsigned int>("side") : side = SIDE;
+    it->exists("disk") ? disk = it->getParameter<unsigned int>("disk") : disk = DISK;
+    it->exists("blade") ? blade = it->getParameter<unsigned int>("blade") : blade = BLADE;
+    it->exists("panel") ? panel = it->getParameter<unsigned int>("panel") : panel = PANEL;
+    double factor = it->getParameter<double>("factor");
+    //std::cout<<"layer, ladder, module "<<layer<<", "<<ladder<<", "<<module<<std::endl;
+    if (det == "bpix") {
+      DetId detID=tTopo->pxbDetId(layer,ladder,module);
+      bitset<32> temp (detID.rawId());
+      //std::cout<<"Geom BPix detID "<<temp<<std::endl;
+      DynamicInefficiency->putColGeomFactor(detID.rawId(),factor);
+    }
+    else if (det == "fpix") {
+      DetId detID=tTopo->pxfDetId(side, disk, blade, panel, module);
+      bitset<32> temp (detID.rawId());
+      //std::cout<<"Geom FPix detID "<<temp<<std::endl;
+      DynamicInefficiency->putColGeomFactor(detID.rawId(),factor);
+    }
+    else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
+  }
+
+  for(Parameters::iterator it = theColPUEfficiency_.begin(); it != theColPUEfficiency_.end(); ++it) {
+    string det = it->getParameter<string>("det");
+    it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
+    it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
+    it->exists("module") ? module = it->getParameter<unsigned int>("module") : module = MODULE;
+    it->exists("side") ? side = it->getParameter<unsigned int>("side") : side = SIDE;
+    it->exists("disk") ? disk = it->getParameter<unsigned int>("disk") : disk = DISK;
+    it->exists("blade") ? blade = it->getParameter<unsigned int>("blade") : blade = BLADE;
+    it->exists("panel") ? panel = it->getParameter<unsigned int>("panel") : panel = PANEL;
+    std::vector<double> factor = it->getParameter<std::vector<double> >("factor");
+    if (det == "bpix") {
+      DetId detID=tTopo->pxbDetId(layer,ladder,module);
+      bitset<32> temp (detID.rawId());
+      //std::cout<<"PU BPix detID "<<temp<<std::endl;
+      DynamicInefficiency->putColPUFactor(detID.rawId(),factor);
+    }
+
+  }
+
+  for(Parameters::iterator it = theChipGeomFactors_.begin(); it != theChipGeomFactors_.end(); ++it) {
+    string det = it->getParameter<string>("det");
+    it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
+    it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
+    it->exists("module") ? module = it->getParameter<unsigned int>("module") : module = MODULE;
+    it->exists("side") ? side = it->getParameter<unsigned int>("side") : side = SIDE;
+    it->exists("disk") ? disk = it->getParameter<unsigned int>("disk") : disk = DISK;
+    it->exists("blade") ? blade = it->getParameter<unsigned int>("blade") : blade = BLADE;
+    it->exists("panel") ? panel = it->getParameter<unsigned int>("panel") : panel = PANEL;
+    double factor = it->getParameter<double>("factor");
+    //std::cout<<"layer, ladder, module "<<layer<<", "<<ladder<<", "<<module<<std::endl;
+    if (det == "bpix") {
+      DetId detID=tTopo->pxbDetId(layer,ladder,module);
+      bitset<32> temp (detID.rawId());
+      //std::cout<<"Geom BPix detID "<<temp<<std::endl;
+      DynamicInefficiency->putChipGeomFactor(detID.rawId(),factor);
+    }
+    else if (det == "fpix") {
+      DetId detID=tTopo->pxfDetId(side, disk, blade, panel, module);
+      bitset<32> temp (detID.rawId());
+      //std::cout<<"Geom FPix detID "<<temp<<std::endl;
+      DynamicInefficiency->putChipGeomFactor(detID.rawId(),factor);
+    }
+    else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
+  }
+
+  for(Parameters::iterator it = theChipPUEfficiency_.begin(); it != theChipPUEfficiency_.end(); ++it) {
+    string det = it->getParameter<string>("det");
+    it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
+    it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
+    it->exists("module") ? module = it->getParameter<unsigned int>("module") : module = MODULE;
+    it->exists("side") ? side = it->getParameter<unsigned int>("side") : side = SIDE;
+    it->exists("disk") ? disk = it->getParameter<unsigned int>("disk") : disk = DISK;
+    it->exists("blade") ? blade = it->getParameter<unsigned int>("blade") : blade = BLADE;
+    it->exists("panel") ? panel = it->getParameter<unsigned int>("panel") : panel = PANEL;
+    std::vector<double> factor = it->getParameter<std::vector<double> >("factor");
+    if (det == "bpix") {
+      DetId detID=tTopo->pxbDetId(layer,ladder,module);
+      bitset<32> temp (detID.rawId());
+      //std::cout<<"PU BPix detID "<<temp<<std::endl;
+      DynamicInefficiency->putChipPUFactor(detID.rawId(),factor);
     }
 
   }
 //other efficiencies
     DynamicInefficiency->puttheInstLumiScaleFactor(theInstLumiScaleFactor_);
+    /*
     std::vector<std::vector<double> > v_PixelBPixEfficiency;
     std::vector<std::vector<double> > v_PixelFPixEfficiency;
     for(Parameters::iterator it = thePixelEfficiency_.begin(); it != thePixelEfficiency_.end(); ++it) {
@@ -175,6 +270,7 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
     DynamicInefficiency->putPixelEfficiency(bpix_fpix,v_PixelBPixEfficiency);
     bpix_fpix="fpix";
     DynamicInefficiency->putPixelEfficiency(bpix_fpix,v_PixelFPixEfficiency);
+*/
 
 	edm::Service<cond::service::PoolDBOutputService> mydbservice;
 	if( mydbservice.isAvailable() ){
