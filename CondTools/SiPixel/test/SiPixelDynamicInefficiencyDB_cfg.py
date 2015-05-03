@@ -223,6 +223,462 @@ process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyD
         ),
       cms.PSet(
         det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(1),
+        factor = cms.double(0.996276)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(2),
+        factor = cms.double(0.993354)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(3),
+        factor = cms.double(0.993752)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(4),
+        factor = cms.double(0.992948)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(5),
+        factor = cms.double(0.993871)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(6),
+        factor = cms.double(0.992317)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(7),
+        factor = cms.double(0.997733)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(8),
+        factor = cms.double(0.992516)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(9),
+        factor = cms.double(0.992649)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(10),
+        factor = cms.double(0.993425)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(11),
+        factor = cms.double(0.994065)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(12),
+        factor = cms.double(0.993481)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(13),
+        factor = cms.double(0.993169)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(14),
+        factor = cms.double(0.994223)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(15),
+        factor = cms.double(0.992397)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(16),
+        factor = cms.double(0.99509)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(17),
+        factor = cms.double(0.995177)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(18),
+        factor = cms.double(0.995319)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(19),
+        factor = cms.double(0.994925)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(20),
+        factor = cms.double(0.992933)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(21),
+        factor = cms.double(0.994111)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(22),
+        factor = cms.double(0.9948)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(23),
+        factor = cms.double(0.994711)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(24),
+        factor = cms.double(0.994294)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(25),
+        factor = cms.double(0.995392)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(26),
+        factor = cms.double(0.994229)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(27),
+        factor = cms.double(0.994414)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(28),
+        factor = cms.double(0.995271)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(29),
+        factor = cms.double(0.993585)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(30),
+        factor = cms.double(0.995264)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(31),
+        factor = cms.double(0.992977)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        ladder = cms.uint32(32),
+        factor = cms.double(0.993642)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(1),
+        factor = cms.double(0.996206)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(2),
+        factor = cms.double(0.998039)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(3),
+        factor = cms.double(0.995801)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(4),
+        factor = cms.double(0.99665)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(5),
+        factor = cms.double(0.996414)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(6),
+        factor = cms.double(0.995755)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(7),
+        factor = cms.double(0.996518)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(8),
+        factor = cms.double(0.995584)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(9),
+        factor = cms.double(0.997171)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(10),
+        factor = cms.double(0.998056)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(11),
+        factor = cms.double(0.99595)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(12),
+        factor = cms.double(0.997473)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(13),
+        factor = cms.double(0.996858)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(14),
+        factor = cms.double(0.996486)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(15),
+        factor = cms.double(0.997442)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(16),
+        factor = cms.double(0.998002)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(17),
+        factor = cms.double(0.995429)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(18),
+        factor = cms.double(0.997939)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(19),
+        factor = cms.double(0.996896)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(20),
+        factor = cms.double(0.997434)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(21),
+        factor = cms.double(0.996616)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(22),
+        factor = cms.double(0.996439)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(23),
+        factor = cms.double(0.996546)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(24),
+        factor = cms.double(0.997597)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(25),
+        factor = cms.double(0.995435)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(26),
+        factor = cms.double(0.996396)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(27),
+        factor = cms.double(0.99621)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(28),
+        factor = cms.double(0.998316)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(29),
+        factor = cms.double(0.998431)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(30),
+        factor = cms.double(0.99598)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(31),
+        factor = cms.double(0.997063)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(32),
+        factor = cms.double(0.996245)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(33),
+        factor = cms.double(0.997502)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(34),
+        factor = cms.double(0.996254)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(35),
+        factor = cms.double(0.997545)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(36),
+        factor = cms.double(0.997553)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(37),
+        factor = cms.double(0.996722)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(38),
+        factor = cms.double(0.996107)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(39),
+        factor = cms.double(0.996588)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(40),
+        factor = cms.double(0.996277)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(41),
+        factor = cms.double(0.99785)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(42),
+        factor = cms.double(0.997087)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(43),
+        factor = cms.double(0.998139)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        ladder = cms.uint32(44),
+        factor = cms.double(0.997139)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
         layer = cms.uint32(1),
         module = cms.uint32(1),
         factor = cms.double(0.953582)
@@ -268,6 +724,102 @@ process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyD
         layer = cms.uint32(1),
         module = cms.uint32(8),
         factor = cms.double(0.953582)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        module = cms.uint32(1),
+        factor = cms.double(1.00341)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        module = cms.uint32(2),
+        factor = cms.double(0.99562)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        module = cms.uint32(3),
+        factor = cms.double(0.999792)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        module = cms.uint32(4),
+        factor = cms.double(1.00069)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        module = cms.uint32(5),
+        factor = cms.double(1.00069)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        module = cms.uint32(6),
+        factor = cms.double(0.999792)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        module = cms.uint32(7),
+        factor = cms.double(0.99562)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(2),
+        module = cms.uint32(8),
+        factor = cms.double(1.00341)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        module = cms.uint32(1),
+        factor = cms.double(1.00039)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        module = cms.uint32(2),
+        factor = cms.double(0.998147)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        module = cms.uint32(3),
+        factor = cms.double(0.999744)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        module = cms.uint32(4),
+        factor = cms.double(1.00006)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        module = cms.uint32(5),
+        factor = cms.double(1.00006)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        module = cms.uint32(6),
+        factor = cms.double(0.999744)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        module = cms.uint32(7),
+        factor = cms.double(0.998147)
+        ),
+      cms.PSet(
+        det = cms.string("bpix"),
+        layer = cms.uint32(3),
+        module = cms.uint32(8),
+        factor = cms.double(1.00039)
         ),
       cms.PSet(
         det = cms.string("fpix"),

@@ -172,13 +172,13 @@ void SiPixelDynamicInefficiencyReader::analyze( const edm::Event& e, const edm::
         _pu_scale[pu_iterator] = 0;
         //std::cout<<"DBPu_scale = ";
         for  (size_t j=0; j<it_colpu->second.size(); j++){
-          //std::cout<<"+"<<instlumi_pow<<"*"<<it_pu->second[j];
+          //std::cout<<"+"<<instlumi_pow<<"*"<<it_colpu->second[j];
           _pu_scale[pu_iterator]+=instlumi_pow*it_colpu->second[j];
           instlumi_pow*=instlumi;
         }
-        //std::cout<<" = pu scale "<<_pu_scale[0]<<std::endl;
-        pu_iterator++;
+        //std::cout<<" = pu scale "<<_pu_scale[pu_iterator]<<" iterator "<<pu_iterator<<std::endl;
       }
+      pu_iterator++;
     }
     //Config geom factor calculation 
     int layerIndex=tTopo->pxbLayer(detid.rawId());
@@ -191,40 +191,40 @@ void SiPixelDynamicInefficiencyReader::analyze( const edm::Event& e, const edm::
       
       columnEfficiency *= theLadderEfficiency_BPix[layerIndex-1][ladder-1]*theModuleEfficiency_BPix[layerIndex-1][module-1];
     //Config PU factor calculation
-      for (size_t i=0; i<pu_det; i++) {
-        double instlumi = 30*theInstLumiScaleFactor;
-        double instlumi_pow=1.;
-        _pu_scale_conf[i] = 0;
-        //std::cout<<"CFPu_scale = ";
-        for  (size_t j=0; j<thePUEfficiency[i].size(); j++){
-          //std::cout<<"+"<<instlumi_pow<<"*"<<thePUEfficiency[i][j];
-          _pu_scale_conf[i]+=instlumi_pow*thePUEfficiency[i][j];
-          instlumi_pow*=instlumi;
-        }
-        //std::cout<<" = pu scale "<<_pu_scale_conf[0]<<std::endl;
+      double instlumi = 30*theInstLumiScaleFactor;
+      double instlumi_pow=1.;
+      _pu_scale_conf[layerIndex-1] = 0;
+      //std::cout<<"CFPu_scale = ";
+      for  (size_t j=0; j<thePUEfficiency[layerIndex-1].size(); j++){
+        //std::cout<<"+"<<instlumi_pow<<"*"<<thePUEfficiency[layerIndex-1][j];
+        _pu_scale_conf[layerIndex-1]+=instlumi_pow*thePUEfficiency[layerIndex-1][j];
+        instlumi_pow*=instlumi;
       }
+      //std::cout<<" = pu scale "<<_pu_scale_conf[layerIndex-1]<<std::endl;
     }
-    if (_pu_scale[0]==0 || scale_db == 1) continue;
+    if (scale_db == 1) continue;
     if (scale_db == columnEfficiency) {
       //printf("Config match, detid %x\tfactor %f\n",detid.rawId(),columnEfficiency);
       match++;
     }
     else {
-      printf("Config mismatch! detid %x\t db_factor %f\tconf_factor %f\n",detid.rawId(),scale_db,columnEfficiency);
+      //printf("Config mismatch! detid %x\t db_geom_factor %f\tconf_geom_factor %f\n",detid.rawId(),scale_db,columnEfficiency);
       mismatch++;
     }
     for (unsigned int i=0;i<pu_det;i++) {
-      if (_pu_scale[i] == _pu_scale_conf[i]) {
+      if (_pu_scale[i] != 0 && _pu_scale_conf[i] != 0 && _pu_scale[i] == _pu_scale_conf[i]) {
       //printf("Config match! detid %x\t db_pu_scale %f\tconf_pu_scale %f\n",detid.rawId(),_pu_scale[i],_pu_scale_conf[i]);
       pu_match++;
+      continue;
       }
-      if (_pu_scale[i] != 0 && _pu_scale[i] != _pu_scale_conf[i]) {
+      if (_pu_scale[i] != 0 && _pu_scale_conf[i] != 0 && _pu_scale[i] != _pu_scale_conf[i]) {
         printf("Config mismatch! detid %x\t db_pu_scale %f\tconf_pu_scale %f\n",detid.rawId(),_pu_scale[i],_pu_scale_conf[i]);
         pu_mismatch++;
+        continue;
       }
     }
   }
   std::cout<<match<<" geom factors and "<<pu_match<<" pu factors matched to config file factors!"<<std::endl;
-  if (mismatch != 0) std::cout<<"ERROR! "<<mismatch<<" factors mismatched to config file factors! Please change config and/or DB content!"<<std::endl;
+  if (mismatch != 0) std::cout<<"ERROR! "<<mismatch<<" geom factors mismatched to config file factors! Please change config and/or DB content!"<<std::endl;
   if (pu_mismatch != 0) std::cout<<"ERROR! "<<pu_mismatch<<" pu_factors mismatched to config file pu_factors! Please change config and/or DB content!"<<std::endl;
 }
