@@ -31,11 +31,9 @@ SiPixelDynamicInefficiencyDB::SiPixelDynamicInefficiencyDB(edm::ParameterSet con
 	recordName_ = conf_.getUntrackedParameter<std::string>("record","SiPixelDynamicInefficiencyRcd");
 
        thePixelGeomFactors_ = conf_.getUntrackedParameter<Parameters>("thePixelGeomFactors");
-       thePixelPUEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePixelPUEfficiency");
        theColGeomFactors_ = conf_.getUntrackedParameter<Parameters>("theColGeomFactors");
-       theColPUEfficiency_ = conf_.getUntrackedParameter<Parameters>("theColPUEfficiency");
        theChipGeomFactors_ = conf_.getUntrackedParameter<Parameters>("theChipGeomFactors");
-       theChipPUEfficiency_ = conf_.getUntrackedParameter<Parameters>("theChipPUEfficiency");
+       thePUEfficiency_ = conf_.getUntrackedParameter<Parameters>("thePUEfficiency");
        theInstLumiScaleFactor_ = conf_.getUntrackedParameter<double>("theInstLumiScaleFactor");
 }
 
@@ -59,30 +57,13 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
 	SiPixelDynamicInefficiency* DynamicInefficiency = new SiPixelDynamicInefficiency();
 
 
-        //Retrieve tracker topology from geometry
-        edm::ESHandle<TrackerTopology> tTopoHandle;
-        es.get<IdealGeometryRecord>().get(tTopoHandle);
-        const TrackerTopology* const tTopo = tTopoHandle.product();
-//DetID tesztelo
-/*
-  uint32_t layer=std::numeric_limits<uint32_t>::max();
-  //uint32_t ladder=std::numeric_limits<uint32_t>::max();
-  uint32_t ladder=1;
-  uint32_t module=1;
-  DetId testID=tTopo->pxbDetId(layer,ladder,module);
-  bitset<32> temp (testID.rawId());
-  std::cout<<"haho "<<temp<<std::endl;
+  //Retrieve tracker topology from geometry
+  edm::ESHandle<TrackerTopology> tTopoHandle;
+  es.get<IdealGeometryRecord>().get(tTopoHandle);
+  const TrackerTopology* const tTopo = tTopoHandle.product();
 
-  uint32_t side=std::numeric_limits<uint32_t>::max();
-  uint32_t disk=1;
-  uint32_t blade=1;
-  uint32_t panel=1;
-  uint32_t modulef=1;
-  DetId testfID=tTopo->pxfDetId(side,disk,blade,panel,modulef);
-  bitset<32> tempf (testfID.rawId());
-  std::cout<<"haho "<<tempf<<std::endl;
-*/
-
+  uint32_t max = numeric_limits<uint32_t>::max();
+  uint32_t mask;
   uint32_t layer, LAYER = 0;
   uint32_t ladder, LADDER = 0;
   uint32_t module, MODULE = 0;
@@ -90,6 +71,26 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
   uint32_t disk, DISK = 0;
   uint32_t blade, BLADE = 0;
   uint32_t panel, PANEL = 0;
+
+  //Put BPix masks
+  mask = tTopo->pxbDetId(max,LADDER,MODULE).rawId();
+  DynamicInefficiency->putDetIdmask(mask);
+  mask = tTopo->pxbDetId(LAYER,max,MODULE).rawId();
+  DynamicInefficiency->putDetIdmask(mask);
+  mask = tTopo->pxbDetId(LAYER,LADDER,max).rawId();
+  DynamicInefficiency->putDetIdmask(mask);
+  //Put FPix masks
+  mask = tTopo->pxfDetId(max,DISK,BLADE,PANEL,MODULE).rawId();
+  DynamicInefficiency->putDetIdmask(mask);
+  mask = tTopo->pxfDetId(SIDE,max,BLADE,PANEL,MODULE).rawId();
+  DynamicInefficiency->putDetIdmask(mask);
+  mask = tTopo->pxfDetId(SIDE,DISK,max,PANEL,MODULE).rawId();
+  DynamicInefficiency->putDetIdmask(mask);
+  mask = tTopo->pxfDetId(SIDE,DISK,BLADE,max,MODULE).rawId();
+  DynamicInefficiency->putDetIdmask(mask);
+  mask = tTopo->pxfDetId(SIDE,DISK,BLADE,PANEL,max).rawId();
+  DynamicInefficiency->putDetIdmask(mask);
+  
 
   for(Parameters::iterator it = thePixelGeomFactors_.begin(); it != thePixelGeomFactors_.end(); ++it) {
     string det = it->getParameter<string>("det");
@@ -115,25 +116,6 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
       DynamicInefficiency->putPixelGeomFactor(detID.rawId(),factor);
     }
     else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
-  }
-
-  for(Parameters::iterator it = thePixelPUEfficiency_.begin(); it != thePixelPUEfficiency_.end(); ++it) {
-    string det = it->getParameter<string>("det");
-    it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
-    it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
-    it->exists("module") ? module = it->getParameter<unsigned int>("module") : module = MODULE;
-    it->exists("side") ? side = it->getParameter<unsigned int>("side") : side = SIDE;
-    it->exists("disk") ? disk = it->getParameter<unsigned int>("disk") : disk = DISK;
-    it->exists("blade") ? blade = it->getParameter<unsigned int>("blade") : blade = BLADE;
-    it->exists("panel") ? panel = it->getParameter<unsigned int>("panel") : panel = PANEL;
-    std::vector<double> factor = it->getParameter<std::vector<double> >("factor");
-    if (det == "bpix") {
-      DetId detID=tTopo->pxbDetId(layer,ladder,module);
-      bitset<32> temp (detID.rawId());
-      //std::cout<<"PU BPix detID "<<temp<<std::endl;
-      DynamicInefficiency->putPixelPUFactor(detID.rawId(),factor);
-    }
-
   }
 
   for(Parameters::iterator it = theColGeomFactors_.begin(); it != theColGeomFactors_.end(); ++it) {
@@ -162,7 +144,7 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
     else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
   }
 
-  for(Parameters::iterator it = theColPUEfficiency_.begin(); it != theColPUEfficiency_.end(); ++it) {
+  for(Parameters::iterator it = thePUEfficiency_.begin(); it != thePUEfficiency_.end(); ++it) {
     string det = it->getParameter<string>("det");
     it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
     it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
@@ -176,7 +158,7 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
       DetId detID=tTopo->pxbDetId(layer,ladder,module);
       bitset<32> temp (detID.rawId());
       //std::cout<<"PU BPix detID "<<temp<<std::endl;
-      DynamicInefficiency->putColPUFactor(detID.rawId(),factor);
+      DynamicInefficiency->putPUFactor(detID.rawId(),factor);
     }
 
   }
@@ -205,24 +187,6 @@ void SiPixelDynamicInefficiencyDB::analyze(const edm::Event& e, const edm::Event
       DynamicInefficiency->putChipGeomFactor(detID.rawId(),factor);
     }
     else edm::LogError("SiPixelDynamicInefficiencyDB")<<"SiPixelDynamicInefficiencyDB input detector part is neither bpix nor fpix"<<std::endl;
-  }
-
-  for(Parameters::iterator it = theChipPUEfficiency_.begin(); it != theChipPUEfficiency_.end(); ++it) {
-    string det = it->getParameter<string>("det");
-    it->exists("layer") ? layer = it->getParameter<unsigned int>("layer") : layer = LAYER;
-    it->exists("ladder") ? ladder = it->getParameter<unsigned int>("ladder") : ladder = LADDER;
-    it->exists("module") ? module = it->getParameter<unsigned int>("module") : module = MODULE;
-    it->exists("side") ? side = it->getParameter<unsigned int>("side") : side = SIDE;
-    it->exists("disk") ? disk = it->getParameter<unsigned int>("disk") : disk = DISK;
-    it->exists("blade") ? blade = it->getParameter<unsigned int>("blade") : blade = BLADE;
-    it->exists("panel") ? panel = it->getParameter<unsigned int>("panel") : panel = PANEL;
-    std::vector<double> factor = it->getParameter<std::vector<double> >("factor");
-    if (det == "bpix") {
-      DetId detID=tTopo->pxbDetId(layer,ladder,module);
-      bitset<32> temp (detID.rawId());
-      //std::cout<<"PU BPix detID "<<temp<<std::endl;
-      DynamicInefficiency->putChipPUFactor(detID.rawId(),factor);
-    }
   }
   DynamicInefficiency->puttheInstLumiScaleFactor(theInstLumiScaleFactor_);
 

@@ -90,16 +90,6 @@ process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyD
         factor = cms.double(0.999)
         ),
       ),
-    thePixelPUEfficiency = cms.untracked.VPSet(
-      cms.PSet(
-        det = cms.string("bpix"),
-        factor = cms.vdouble(1),
-        ),
-      cms.PSet(
-        det = cms.string("fpix"),
-        factor = cms.vdouble(1),
-        ),
-      ),
     theColGeomFactors = cms.untracked.VPSet(
       cms.PSet(
         det = cms.string("bpix"),
@@ -826,7 +816,17 @@ process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyD
         factor = cms.double(1)
         ),
       ),
-    theColPUEfficiency = cms.untracked.VPSet(
+    theChipGeomFactors = cms.untracked.VPSet(
+      cms.PSet(
+        det = cms.string("bpix"),
+        factor = cms.double(1)
+        ),
+      cms.PSet(
+        det = cms.string("fpix"),
+        factor = cms.double(0.999)
+        ),
+      ),
+    thePUEfficiency = cms.untracked.VPSet(
       cms.PSet(
         det = cms.string("bpix"),
         layer = cms.uint32(1),
@@ -868,26 +868,6 @@ process.SiPixelDynamicInefficiency = cms.EDAnalyzer("SiPixelDynamicInefficiencyD
           1.0
           ),
         )
-      ),
-    theChipGeomFactors = cms.untracked.VPSet(
-      cms.PSet(
-        det = cms.string("bpix"),
-        factor = cms.double(1)
-        ),
-      cms.PSet(
-        det = cms.string("fpix"),
-        factor = cms.double(0.999)
-        ),
-      ),
-    theChipPUEfficiency = cms.untracked.VPSet(
-      cms.PSet(
-        det = cms.string("bpix"),
-        factor = cms.vdouble(1),
-        ),
-      cms.PSet(
-        det = cms.string("fpix"),
-        factor = cms.vdouble(1),
-        ),
       ),
     theInstLumiScaleFactor = cms.untracked.double(221.95)
     )

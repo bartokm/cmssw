@@ -58,64 +58,37 @@ double SiPixelDynamicInefficiency::getChipGeomFactor (const uint32_t& detid) con
   return 0;
 }
 
-bool SiPixelDynamicInefficiency::putPixelPUFactor (const uint32_t& detid, std::vector<double>& v_value){
-  std::map<unsigned int,std::vector<double> >::const_iterator id=m_PixelPUFactors.find(detid);
-  if(id!=m_PixelPUFactors.end()){
-    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency PixelPUFactor for DetID " << detid << " is already stored. Skippig this put" << std::endl;
+bool SiPixelDynamicInefficiency::putPUFactor (const uint32_t& detid, std::vector<double>& v_value){
+  std::map<unsigned int,std::vector<double> >::const_iterator id=m_PUFactors.find(detid);
+  if(id!=m_PUFactors.end()){
+    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency PUFactor for DetID " << detid << " is already stored. Skippig this put" << std::endl;
     return false;
   }
-  else m_PixelPUFactors[detid]=v_value;
+  else m_PUFactors[detid]=v_value;
   return true;
 }
 
-std::vector<double> SiPixelDynamicInefficiency::getPixelPUFactor (const uint32_t& detid) const {
-  std::map<unsigned int,std::vector<double> >::const_iterator id=m_PixelPUFactors.find(detid);
-  if(id!=m_PixelPUFactors.end()) return id->second;
+std::vector<double> SiPixelDynamicInefficiency::getPUFactor (const uint32_t& detid) const {
+  std::map<unsigned int,std::vector<double> >::const_iterator id=m_PUFactors.find(detid);
+  if(id!=m_PUFactors.end()) return id->second;
   else {
-    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency PixelPUFactor for DetID " << detid << " is not stored" << std::endl; 
+    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency PUFactor for DetID " << detid << " is not stored" << std::endl; 
   } 
   std::vector<double> empty;
   return empty;
 }
 
-bool SiPixelDynamicInefficiency::putColPUFactor (const uint32_t& detid, std::vector<double>& v_value){
-  std::map<unsigned int,std::vector<double> >::const_iterator id=m_ColPUFactors.find(detid);
-  if(id!=m_ColPUFactors.end()){
-    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency ColPUFactor for DetID " << detid << " is already stored. Skippig this put" << std::endl;
-    return false;
-  }
-  else m_ColPUFactors[detid]=v_value;
+bool SiPixelDynamicInefficiency::putDetIdmask(uint32_t& mask){
+  for (unsigned int i=0;i<v_DetIdmasks.size();i++) if (mask == v_DetIdmasks.at(i)) return false;
+  v_DetIdmasks.push_back(mask);
   return true;
 }
-
-std::vector<double> SiPixelDynamicInefficiency::getColPUFactor (const uint32_t& detid) const {
-  std::map<unsigned int,std::vector<double> >::const_iterator id=m_ColPUFactors.find(detid);
-  if(id!=m_ColPUFactors.end()) return id->second;
-  else {
-    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency ColPUFactor for DetID " << detid << " is not stored" << std::endl; 
-  } 
-  std::vector<double> empty;
-  return empty;
-}
-
-bool SiPixelDynamicInefficiency::putChipPUFactor (const uint32_t& detid, std::vector<double>& v_value){
-  std::map<unsigned int,std::vector<double> >::const_iterator id=m_ChipPUFactors.find(detid);
-  if(id!=m_ChipPUFactors.end()){
-    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency ChipPUFactor for DetID " << detid << " is already stored. Skippig this put" << std::endl;
-    return false;
+uint32_t SiPixelDynamicInefficiency::getDetIdmask(unsigned int& i) const{
+  if (v_DetIdmasks.size() <= i) {
+    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency DetIdmask "<<i<<" is not stored!" << std::endl;
+    return 0;
   }
-  else m_ChipPUFactors[detid]=v_value;
-  return true;
-}
-
-std::vector<double> SiPixelDynamicInefficiency::getChipPUFactor (const uint32_t& detid) const {
-  std::map<unsigned int,std::vector<double> >::const_iterator id=m_ChipPUFactors.find(detid);
-  if(id!=m_ChipPUFactors.end()) return id->second;
-  else {
-    edm::LogError("SiPixelDynamicInefficiency") << "SiPixelDynamicInefficiency ChipPUFactor for DetID " << detid << " is not stored" << std::endl; 
-  } 
-  std::vector<double> empty;
-  return empty;
+  else return v_DetIdmasks.at(i);
 }
 
 bool SiPixelDynamicInefficiency::puttheInstLumiScaleFactor(double& theInstLumiScaleFactor){

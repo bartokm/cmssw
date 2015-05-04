@@ -69,15 +69,11 @@ void SiPixelDynamicInefficiencyReader::analyze( const edm::Event& e, const edm::
   std::map<unsigned int,double> map_pixelgeomfactor = SiPixelDynamicInefficiency_->getPixelGeomFactors();
   std::map<unsigned int,double> map_colgeomfactor = SiPixelDynamicInefficiency_->getColGeomFactors();
   std::map<unsigned int,double> map_chipgeomfactor = SiPixelDynamicInefficiency_->getChipGeomFactors();
-  std::map<unsigned int,std::vector<double> > map_pixelpufactor = SiPixelDynamicInefficiency_->getPixelPUFactors();
-  std::map<unsigned int,std::vector<double> > map_colpufactor = SiPixelDynamicInefficiency_->getColPUFactors();
-  std::map<unsigned int,std::vector<double> > map_chippufactor = SiPixelDynamicInefficiency_->getChipPUFactors();
+  std::map<unsigned int,std::vector<double> > map_pufactor = SiPixelDynamicInefficiency_->getPUFactors();
   std::map<unsigned int,double>::const_iterator it_pixelgeom;
   std::map<unsigned int,double>::const_iterator it_colgeom;
   std::map<unsigned int,double>::const_iterator it_chipgeom;
-  std::map<unsigned int,std::vector<double> >::const_iterator it_pixelpu;
-  std::map<unsigned int,std::vector<double> >::const_iterator it_colpu;
-  std::map<unsigned int,std::vector<double> >::const_iterator it_chippu;
+  std::map<unsigned int,std::vector<double> >::const_iterator it_pu;
 
   std::cout<<"Printing out DB content:"<<std::endl;
   for (it_pixelgeom=map_pixelgeomfactor.begin();it_pixelgeom!=map_pixelgeomfactor.end();it_pixelgeom++)
@@ -92,48 +88,22 @@ void SiPixelDynamicInefficiencyReader::analyze( const edm::Event& e, const edm::
   {
     printf("chipgeom detid %x\tfactor %f\n",it_chipgeom->first,it_chipgeom->second);
   }
-  for (it_pixelpu=map_pixelpufactor.begin();it_pixelpu!=map_pixelpufactor.end();it_pixelpu++)
+  for (it_pu=map_pufactor.begin();it_pu!=map_pufactor.end();it_pu++)
   {
-    printf("pixelpu detid %x\t",it_pixelpu->first);
-    std::cout  << " Size of vector "<<it_pixelpu->second.size()<<" elements:";
-    if (it_pixelpu->second.size()>1) {
-      for (unsigned int i=0;i<it_pixelpu->second.size();i++) {
-        std::cout<<" "<<it_pixelpu->second.at(i);
+    printf("pu detid %x\t",it_pu->first);
+    std::cout  << " Size of vector "<<it_pu->second.size()<<" elements:";
+    if (it_pu->second.size()>1) {
+      for (unsigned int i=0;i<it_pu->second.size();i++) {
+        std::cout<<" "<<it_pu->second.at(i);
       }
       std::cout<<std::endl;
     }
     else {
-      std::cout<<" "<<it_pixelpu->second.at(0)<<std::endl;
+      std::cout<<" "<<it_pu->second.at(0)<<std::endl;
     }
   }
-  for (it_colpu=map_colpufactor.begin();it_colpu!=map_colpufactor.end();it_colpu++)
-  {
-    printf("colpu detid %x\t",it_colpu->first);
-    std::cout  << " Size of vector "<<it_colpu->second.size()<<" elements:";
-    if (it_colpu->second.size()>1) {
-      for (unsigned int i=0;i<it_colpu->second.size();i++) {
-        std::cout<<" "<<it_colpu->second.at(i);
-      }
-      std::cout<<std::endl;
-    }
-    else {
-      std::cout<<" "<<it_colpu->second.at(0)<<std::endl;
-    }
-  }
-  for (it_chippu=map_chippufactor.begin();it_chippu!=map_chippufactor.end();it_chippu++)
-  {
-    printf("chippu detid %x\t",it_chippu->first);
-    std::cout  << " Size of vector "<<it_chippu->second.size()<<" elements:";
-    if (it_chippu->second.size()>1) {
-      for (unsigned int i=0;i<it_chippu->second.size();i++) {
-        std::cout<<" "<<it_chippu->second.at(i);
-      }
-      std::cout<<std::endl;
-    }
-    else {
-      std::cout<<" "<<it_chippu->second.at(0)<<std::endl;
-    }
-  }
+  std::vector<uint32_t> detIdmasks = SiPixelDynamicInefficiency_->getDetIdmasks();
+  for (unsigned int i=0;i<detIdmasks.size();i++) printf("DetId Mask: %x\t\n",detIdmasks.at(i));
   double theInstLumiScaleFactor = SiPixelDynamicInefficiency_->gettheInstLumiScaleFactors();
   std::cout<<"theInstLumiScaleFactor "<<theInstLumiScaleFactor<<std::endl;
 
@@ -147,7 +117,7 @@ void SiPixelDynamicInefficiencyReader::analyze( const edm::Event& e, const edm::
   iSetup.get<TrackerDigiGeometryRecord>().get( pDD );
   edm::LogInfo("SiPixelDynamicInefficiency (old)") <<" There are "<<pDD->detUnits().size() <<" detectors (old)"<<std::endl;
       
-  const size_t pu_det = map_colpufactor.size();
+  const size_t pu_det = map_pufactor.size();
   double _pu_scale[pu_det];
   double _pu_scale_conf[pu_det];
   unsigned int match=0,mismatch=0,pu_match=0,pu_mismatch=0;
@@ -159,21 +129,30 @@ void SiPixelDynamicInefficiencyReader::analyze( const edm::Event& e, const edm::
 
     //Geom DB factor calculation
     for (it_colgeom=map_colgeomfactor.begin();it_colgeom!=map_colgeomfactor.end();it_colgeom++){
-    const DetId mapid = DetId(it_colgeom->first);
-      if (tTopo->isContained(mapid,detid)) scale_db *= it_colgeom->second;
+      const DetId mapid = DetId(it_colgeom->first);
+      //if (tTopo->isContained(mapid,detid)) scale_db *= it_colgeom->second;
+      size_t __i=0;
+      for (;__i<detIdmasks.size();__i++){
+        DetId maskid = DetId(detIdmasks.at(__i));
+        if (maskid.subdetId() != mapid.subdetId()) break;
+        if ((mapid.rawId()&maskid.rawId()) != (detid.rawId()&maskid.rawId()) && (mapid.rawId()&maskid.rawId()&33554431) != 0) break;
+      }
+      if (__i != detIdmasks.size()) continue;
+      scale_db *= it_colgeom->second;
+      std::cout<<"Match!\n";
     }
     //DB PU factor calculation
     unsigned int pu_iterator=0;
-    for (it_colpu=map_colpufactor.begin();it_colpu!=map_colpufactor.end();it_colpu++){
-    const DetId mapid = DetId(it_colpu->first);
+    for (it_pu=map_pufactor.begin();it_pu!=map_pufactor.end();it_pu++){
+    const DetId mapid = DetId(it_pu->first);
       if (tTopo->isContained(mapid,detid)){
         double instlumi = 30*theInstLumiScaleFactor;
         double instlumi_pow=1.;
         _pu_scale[pu_iterator] = 0;
         //std::cout<<"DBPu_scale = ";
-        for  (size_t j=0; j<it_colpu->second.size(); j++){
-          //std::cout<<"+"<<instlumi_pow<<"*"<<it_colpu->second[j];
-          _pu_scale[pu_iterator]+=instlumi_pow*it_colpu->second[j];
+        for  (size_t j=0; j<it_pu->second.size(); j++){
+          //std::cout<<"+"<<instlumi_pow<<"*"<<it_pu->second[j];
+          _pu_scale[pu_iterator]+=instlumi_pow*it_pu->second[j];
           instlumi_pow*=instlumi;
         }
         //std::cout<<" = pu scale "<<_pu_scale[pu_iterator]<<" iterator "<<pu_iterator<<std::endl;
@@ -208,7 +187,7 @@ void SiPixelDynamicInefficiencyReader::analyze( const edm::Event& e, const edm::
       match++;
     }
     else {
-      //printf("Config mismatch! detid %x\t db_geom_factor %f\tconf_geom_factor %f\n",detid.rawId(),scale_db,columnEfficiency);
+      printf("Config mismatch! detid %x\t db_geom_factor %f\tconf_geom_factor %f\n",detid.rawId(),scale_db,columnEfficiency);
       mismatch++;
     }
     for (unsigned int i=0;i<pu_det;i++) {

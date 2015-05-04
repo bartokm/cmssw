@@ -37,21 +37,17 @@ class SiPixelDynamicInefficiencyDB : public edm::EDAnalyzer
  private:
 
   std::vector< std::pair<uint32_t, double> > map_pixelgeomfactor;
-  std::vector< std::pair<uint32_t, std::vector<double> > > map_pixelpufactor;
   std::vector< std::pair<uint32_t, double> > map_colgeomfactor;
-  std::vector< std::pair<uint32_t, std::vector<double> > > map_colpufactor;
   std::vector< std::pair<uint32_t, double> > map_chipgeomfactor;
-  std::vector< std::pair<uint32_t, std::vector<double> > > map_chippufactor;
+  std::vector< std::pair<uint32_t, std::vector<double> > > map_pufactor;
   edm::ParameterSet conf_;
   std::string recordName_;
 
   typedef std::vector< edm::ParameterSet > Parameters;
   Parameters thePixelGeomFactors_;
-  Parameters thePixelPUEfficiency_;
   Parameters theColGeomFactors_;
-  Parameters theColPUEfficiency_;
   Parameters theChipGeomFactors_;
-  Parameters theChipPUEfficiency_;
+  Parameters thePUEfficiency_;
   double theInstLumiScaleFactor_;
 };
 
